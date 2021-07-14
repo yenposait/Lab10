@@ -34,7 +34,12 @@ public class NoteServlet extends HttpServlet {
         if (action != null && action.equals("view")) {
             try {
                 int id = Integer.parseInt(request.getParameter("noteId"));
-                Note note = ns.get(id);
+                String sEmail = (String) session.getAttribute("email");
+                Note note = ns.get(id,sEmail);
+                if( note == null ){
+                    response.sendRedirect("notes");
+                    return;
+                }
                 request.setAttribute("selectedNote", note);
             } catch (Exception ex) {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);

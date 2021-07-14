@@ -8,10 +8,16 @@ import models.Note;
 import models.User;
 
 public class NoteService {
-    public Note get(int id) throws Exception {
+    public Note get(int id, String sEmail) throws Exception {
         NoteDB noteDB = new NoteDB();
         Note note = noteDB.get(id);
-        return note;
+        String oEmail = note.getOwner().getEmail();
+        if(sEmail != null && sEmail.equals(oEmail)){
+            return note;
+        } else {
+            return null;
+        }
+        
 
         
     }
